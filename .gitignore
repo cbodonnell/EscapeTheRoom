@@ -1,0 +1,12 @@
+# Unreal generated stuff
+Binaries/
+Build/
+DerivedDataCache/
+Intermediate/
+Saved/
+
+# Starter content to be ignored for this project
+Content/StarterContent/
+
+# Ignore Xcode workspace
+EscapeTheRoom.xcworkspace/
