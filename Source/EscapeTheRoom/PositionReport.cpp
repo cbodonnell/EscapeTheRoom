@@ -4,7 +4,7 @@
 #include "PositionReport.h"
 
 
-// Sets default values for this component's properties
+// Sets default values for this component's properties (constructor)
 UPositionReport::UPositionReport()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
@@ -21,7 +21,9 @@ void UPositionReport::BeginPlay()
 {
 	Super::BeginPlay(); // inherits from parent classes
 
-	// ...
+    FString ObjectName = GetOwner()->GetName();
+    FString ObjectPos = GetOwner()->GetTransform().GetLocation().ToString();
+	UE_LOG(LogTemp, Warning, TEXT("%s is at %s."), *ObjectName, *ObjectPos) // macro to log messages to console
 	
 }
 
