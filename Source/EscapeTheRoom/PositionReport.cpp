@@ -21,6 +21,7 @@ void UPositionReport::BeginPlay()
 {
 	Super::BeginPlay(); // inherits from parent classes
 
+    // Prints the name and location of those objects with the PositionReport component
     FString ObjectName = GetOwner()->GetName();
     FString ObjectPos = GetOwner()->GetTransform().GetLocation().ToString();
     UE_LOG(LogTemp, Warning, TEXT("%s is at %s."), *ObjectName, *ObjectPos); // macro to log messages to console
