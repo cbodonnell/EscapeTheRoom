@@ -17,18 +17,25 @@ UOpenDoor::UOpenDoor()
 
 // METHODS
 
+// Opens the door object
 void UOpenDoor::OpenDoor() {
     
-    // Find the owning actor
-    AActor* Owner = GetOwner();
-    
-    // Create a new rotation
+    // Create a new FRotator
     FRotator NewRotation = FRotator(0.0f, OpenAngle, 0.0f);
     
     // Set actor's rotation
     Owner->SetActorRotation(NewRotation);
 }
 
+// Closes the door object
+void UOpenDoor::CloseDoor() {
+    
+    // Create a new FRotator
+    FRotator NewRotation = FRotator(0.0f, 0.0f, 0.0f);
+    
+    // Set actor's rotation
+    Owner->SetActorRotation(NewRotation);
+}
 
 // MAIN FUNCTIONS (functions that run at start of game and every frame)
 
@@ -36,6 +43,9 @@ void UOpenDoor::OpenDoor() {
 void UOpenDoor::BeginPlay()
 {
 	Super::BeginPlay();
+    
+    // Find AActor(s) owning OpenDoor component
+    Owner = GetOwner();
     
     // Sets actor that triggers OpenDoor() to the Pawn controlled by the First Player in the World.
     ActorThatOpens = GetWorld()->GetFirstPlayerController()->GetPawn();
@@ -52,6 +62,12 @@ void UOpenDoor::TickComponent( float DeltaTime, ELevelTick TickType, FActorCompo
     // Checks if actor that triggers OpenDoor() is overlapping the PressurePlate and then runs OpenDoor()
     if (PressurePlate->IsOverlappingActor(ActorThatOpens)) {
         OpenDoor();
+        LastDoorOpenTime = GetWorld()->GetTimeSeconds();
+    }
+    
+    // Checks if it is time to close the door
+    if (GetWorld()->GetTimeSeconds() - LastDoorOpenTime >= DoorCloseTime) {
+        CloseDoor();
     }
 }
 

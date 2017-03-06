@@ -23,17 +23,27 @@ public:
 
 private:
     void OpenDoor();
-    
-    // Read only property of the door's opening angle
-    UPROPERTY(VisibleAnywhere)
-    float OpenAngle = -60.0f;
+    void CloseDoor();
     
     // Editable ATriggerVolume
     UPROPERTY(EditAnywhere)
     ATriggerVolume* PressurePlate;
     
-    // Read only actor that triggers OpenDoor()
-    UPROPERTY(VisibleAnywhere)
-    AActor* ActorThatOpens; // Pawn inherits this class
+    // AActor that triggers OpenDoor()
+    AActor* ActorThatOpens; // Pawn inherits the AActor class
+    
+    // Read only property of the door's opening angle
+    UPROPERTY(EditAnywhere)
+    float OpenAngle = -60.0f;
+    
+    // Time that last door was opened
+    float LastDoorOpenTime;
+    
+    // Editable property of time that door waits before closing
+    UPROPERTY(EditAnywhere)
+    float DoorCloseTime = 1.f;
+    
+    // AActor that owns the component OpenDoor
+    AActor* Owner;
 	
 };
