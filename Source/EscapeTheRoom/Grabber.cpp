@@ -35,13 +35,35 @@ void UGrabber::TickComponent( float DeltaTime, ELevelTick TickType, FActorCompon
     FVector PlayerViewPointLocation;
     FRotator PlayerViewPointRotation;
     
+    // Gets first player in the world's ViewPoint
+    // GetPlayerViewPoint() returns out values (modified parameters)
 	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(
                                                                OUT PlayerViewPointLocation,
                                                                OUT PlayerViewPointRotation
                                                                );
-    UE_LOG(LogTemp, Warning, TEXT("ViewPoint Location: %s, ViewPoint Rotation: %s"),
-           *PlayerViewPointLocation.ToString(),
-           *PlayerViewPointRotation.ToString()
-           );
+    
+    // Log Location and Rotation of ViewPoint
+//    UE_LOG(LogTemp, Warning, TEXT("ViewPoint Location: %s, ViewPoint Rotation: %s"),
+//           *PlayerViewPointLocation.ToString(),
+//           *PlayerViewPointRotation.ToString()
+//           );
+    
+    // b Vector for calculating grab vector
+    FVector LineTraceEnd = PlayerViewPointLocation + PlayerViewPointRotation.Vector() * Reach;
+    
+    // Draw grab vector (a+b)
+    DrawDebugLine(
+        GetWorld(),
+        PlayerViewPointLocation, // a
+        LineTraceEnd, // b
+        FColor(255, 0, 0),
+        false,
+        0.f,
+        0.f,
+        20.f
+    );
+    
+    
+    
 }
 

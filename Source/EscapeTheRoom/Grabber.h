@@ -21,6 +21,11 @@ public:
 	// Called every frame
 	virtual void TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction ) override;
 
+private:
+    
+    // Player grab distance
+    UPROPERTY(EditAnywhere)
+    float Reach = 300.f;
 		
 	
 };

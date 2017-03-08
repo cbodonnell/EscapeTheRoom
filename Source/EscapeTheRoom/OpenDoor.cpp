@@ -58,7 +58,6 @@ void UOpenDoor::TickComponent( float DeltaTime, ELevelTick TickType, FActorCompo
 {
 	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
 
-	//Poll this every frame
     // Checks if actor that triggers OpenDoor() is overlapping the PressurePlate and then runs OpenDoor()
     if (PressurePlate->IsOverlappingActor(ActorThatOpens)) {
         OpenDoor();
