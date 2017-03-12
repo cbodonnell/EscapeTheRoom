@@ -22,6 +22,9 @@ public:
 	virtual void TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction ) override;
 
 private:
+    // Get mass of Actors on Plate in kg
+    float GetMassOfActorsOnPlate();
+    
     // Open door method
     void OpenDoor();
     
@@ -32,8 +35,9 @@ private:
     UPROPERTY(EditAnywhere)
     ATriggerVolume* PressurePlate;
     
-    // AActor that triggers OpenDoor()
-    AActor* ActorThatOpens; // Pawn inherits the AActor class
+    // Editable PlateTriggerMass
+    UPROPERTY(EditAnywhere)
+    float PlateTriggerMass = 5.f;
     
     // Read only property of the door's opening angle
     UPROPERTY(EditAnywhere)

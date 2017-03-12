@@ -3,6 +3,7 @@
 #include "EscapeTheRoom.h"
 #include "OpenDoor.h"
 
+#define OUT
 
 // MARK: Constructor
 
@@ -27,10 +28,6 @@ void UOpenDoor::BeginPlay()
     
     // Find AActor(s) owning OpenDoor component
     Owner = GetOwner();
-    
-    // Sets actor that triggers OpenDoor() to the Pawn controlled by the First Player in the World.
-    ActorThatOpens = GetWorld()->GetFirstPlayerController()->GetPawn();
-    
 }
 
 
@@ -40,7 +37,7 @@ void UOpenDoor::TickComponent( float DeltaTime, ELevelTick TickType, FActorCompo
 	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
 
     // Checks if actor that triggers OpenDoor() is overlapping the PressurePlate and then runs OpenDoor()
-    if (PressurePlate->IsOverlappingActor(ActorThatOpens))
+    if (GetMassOfActorsOnPlate() > PlateTriggerMass)
     {
         OpenDoor();
         LastDoorOpenTime = GetWorld()->GetTimeSeconds();
@@ -55,6 +52,24 @@ void UOpenDoor::TickComponent( float DeltaTime, ELevelTick TickType, FActorCompo
 
 
 // MARK: Private Methods
+
+// Gets mass of all actors in the trigger volume
+float UOpenDoor::GetMassOfActorsOnPlate()
+{
+    float TotalMass = 0.f;
+    
+    TArray<AActor*> OverlappingActors;
+    PressurePlate->GetOverlappingActors(OUT OverlappingActors);
+    
+    for (const auto* Actor: OverlappingActors) {
+        TotalMass += Actor->FindComponentByClass<UPrimitiveComponent>()->GetMass();
+        UE_LOG(LogTemp, Warning,
+               TEXT("%s is on the Pressure Plate."), *Actor->GetName());
+    }
+    
+    return TotalMass;
+}
+
 
 // Opens the door object
 void UOpenDoor::OpenDoor()
