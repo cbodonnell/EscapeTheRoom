@@ -4,6 +4,8 @@
 #include "PositionReport.h"
 
 
+// MARK: Constructor
+
 // Sets default values for this component's properties (constructor)
 UPositionReport::UPositionReport()
 {
@@ -11,10 +13,10 @@ UPositionReport::UPositionReport()
 	// off to improve performance if you don't need them.
 	bWantsBeginPlay = true;
 	PrimaryComponentTick.bCanEverTick = true;
-
-	// ...
 }
 
+
+// MARK: Begin and Hotloop
 
 // Called when the game starts
 void UPositionReport::BeginPlay()

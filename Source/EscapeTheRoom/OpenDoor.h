@@ -22,7 +22,10 @@ public:
 	virtual void TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction ) override;
 
 private:
+    // Open door method
     void OpenDoor();
+    
+    // Close door method
     void CloseDoor();
     
     // Editable ATriggerVolume

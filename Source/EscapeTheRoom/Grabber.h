@@ -24,25 +24,32 @@ public:
 private:
     // Player grab distance
     UPROPERTY(EditAnywhere)
-    float Reach = 300.f;
+    float Reach = 450.f;
 		
 	// Physics Handle
     UPhysicsHandleComponent* PhysicsHandle = nullptr;
     
-    // Input Handle
+    // Input Component
     UInputComponent* InputComponent = nullptr;
     
     // Get physics handle of Actor owning Grabber
     void GetPhysicsHandle();
     
-    // Setup input component
+    // Setup input component of Actor owning Grabber
     void SetInputComponent();
     
     // Ray-cast and Grab what is in Reach
     void Grab();
     
-    // Release what it being held
+    // Release what is being grabbed
     void Release();
     
+    // First physics body hit by reach vector
     const FHitResult GetFirstPhysicsBodyInReach();
+    
+    // Get START of reach vector
+    FVector GetStartOfReachVector();
+    
+    // Get END of reach vector
+    FVector GetEndOfReachVector();
 };

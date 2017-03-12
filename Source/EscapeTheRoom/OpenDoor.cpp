@@ -4,6 +4,8 @@
 #include "OpenDoor.h"
 
 
+// MARK: Constructor
+
 // Sets default values for this component's properties (INITIALIZER)
 UOpenDoor::UOpenDoor()
 {
@@ -15,29 +17,8 @@ UOpenDoor::UOpenDoor()
 	// ...
 }
 
-// METHODS
 
-// Opens the door object
-void UOpenDoor::OpenDoor() {
-    
-    // Create a new FRotator
-    FRotator NewRotation = FRotator(0.0f, OpenAngle, 0.0f);
-    
-    // Set actor's rotation
-    Owner->SetActorRotation(NewRotation);
-}
-
-// Closes the door object
-void UOpenDoor::CloseDoor() {
-    
-    // Create a new FRotator
-    FRotator NewRotation = FRotator(0.0f, 0.0f, 0.0f);
-    
-    // Set actor's rotation
-    Owner->SetActorRotation(NewRotation);
-}
-
-// MAIN FUNCTIONS (functions that run at start of game and every frame)
+// MARK: Begin and Hotloop
 
 // Called when the game starts
 void UOpenDoor::BeginPlay()
@@ -59,14 +40,41 @@ void UOpenDoor::TickComponent( float DeltaTime, ELevelTick TickType, FActorCompo
 	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
 
     // Checks if actor that triggers OpenDoor() is overlapping the PressurePlate and then runs OpenDoor()
-    if (PressurePlate->IsOverlappingActor(ActorThatOpens)) {
+    if (PressurePlate->IsOverlappingActor(ActorThatOpens))
+    {
         OpenDoor();
         LastDoorOpenTime = GetWorld()->GetTimeSeconds();
     }
     
     // Checks if it is time to close the door
-    if (GetWorld()->GetTimeSeconds() - LastDoorOpenTime >= DoorCloseTime) {
+    if (GetWorld()->GetTimeSeconds() - LastDoorOpenTime >= DoorCloseTime)
+    {
         CloseDoor();
     }
 }
 
+
+// MARK: Private Methods
+
+// Opens the door object
+void UOpenDoor::OpenDoor()
+{
+    
+    // Create a new FRotator
+    FRotator NewRotation = FRotator(0.0f, OpenAngle, 0.0f);
+    
+    // Set actor's rotation
+    Owner->SetActorRotation(NewRotation);
+}
+
+
+// Closes the door object
+void UOpenDoor::CloseDoor()
+{
+    
+    // Create a new FRotator
+    FRotator NewRotation = FRotator(0.0f, 0.0f, 0.0f);
+    
+    // Set actor's rotation
+    Owner->SetActorRotation(NewRotation);
+}
