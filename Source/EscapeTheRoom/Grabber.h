@@ -22,10 +22,27 @@ public:
 	virtual void TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction ) override;
 
 private:
-    
     // Player grab distance
     UPROPERTY(EditAnywhere)
-    float Reach = 300.f;
+    float Reach = 150.f;
 		
-	
+	// Physics Handle
+    UPhysicsHandleComponent* PhysicsHandle = nullptr;
+    
+    // Input Handle
+    UInputComponent* InputComponent = nullptr;
+    
+    // Get physics handle of Actor owning Grabber
+    void GetPhysicsHandle();
+    
+    // Setup input component
+    void SetInputComponent();
+    
+    // Ray-cast and Grab what is in Reach
+    void Grab();
+    
+    // Release what it being held
+    void Release();
+    
+    const FHitResult GetFirstPhysicsBodyInReach();
 };
