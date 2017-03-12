@@ -24,7 +24,7 @@ public:
 private:
     // Player grab distance
     UPROPERTY(EditAnywhere)
-    float Reach = 150.f;
+    float Reach = 300.f;
 		
 	// Physics Handle
     UPhysicsHandleComponent* PhysicsHandle = nullptr;
