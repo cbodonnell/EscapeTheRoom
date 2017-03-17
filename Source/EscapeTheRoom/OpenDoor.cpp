@@ -39,14 +39,14 @@ void UOpenDoor::TickComponent( float DeltaTime, ELevelTick TickType, FActorCompo
     // Checks if actor that triggers OpenDoor() is overlapping the PressurePlate and then runs OpenDoor()
     if (GetMassOfActorsOnPlate() > PlateTriggerMass)
     {
-        OpenDoor();
-        LastDoorOpenTime = GetWorld()->GetTimeSeconds();
+        // Broadcasting the OnOpen event
+        OnOpen.Broadcast();
     }
     
     // Checks if it is time to close the door
-    if (GetWorld()->GetTimeSeconds() - LastDoorOpenTime >= DoorCloseTime)
+    else
     {
-        CloseDoor();
+        OnClose.Broadcast();
     }
 }
 
@@ -66,30 +66,4 @@ float UOpenDoor::GetMassOfActorsOnPlate()
     }
     
     return TotalMass;
-}
-
-
-// Opens the door object
-void UOpenDoor::OpenDoor()
-{
-//    // Create a new FRotator
-//    FRotator NewRotation = FRotator(0.0f, OpenAngle, 0.0f);
-//    
-//    // Set actor's rotation
-//    Owner->SetActorRotation(NewRotation);
-    
-    // Broadcasting the OnOpenRequest event
-    OnOpenRequest.Broadcast();
-}
-
-
-// Closes the door object
-void UOpenDoor::CloseDoor()
-{
-    
-    // Create a new FRotator
-    FRotator NewRotation = FRotator(0.0f, 0.0f, 0.0f);
-    
-    // Set actor's rotation
-    Owner->SetActorRotation(NewRotation);
 }
